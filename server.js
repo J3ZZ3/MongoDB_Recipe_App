@@ -1,23 +1,20 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const recipeRoutes = require('./routes/recipes');
+const connectDB = require('./config/db');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(bodyParser.json());
+// Connect to database
+connectDB();
 
-// MongoDB Connection
-mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch((error) => console.error('MongoDB connection error:', error));
+// Body parser
+app.use(express.json());
 
 // Routes
-app.use('/recipes', recipeRoutes);
+app.use('/api/recipes', require('./routes/recipeRoutes'));
 
-// Start Server
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+}); 
