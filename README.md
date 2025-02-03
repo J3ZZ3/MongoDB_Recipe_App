@@ -1,96 +1,132 @@
- Recipe API with Authentication
+# Recipe API with Authentication
 
 A secure RESTful API for managing recipes built with Node.js, Express, and MongoDB, featuring JWT authentication and role-based access control.
 
-** Features
+## Features
 
-- User authentication (JWT)
-- Role-based authorization (Admin/User)
-- CRUD operations for recipes
-- MongoDB database integration
-- Input validation
-- Error handling
-- Pagination support
-- RESTful architecture
+- **User authentication (JWT)**: Secure user login and registration using JSON Web Tokens.
+- **Role-based authorization (Admin/User)**: Different access levels for users based on their roles.
+- **CRUD operations for recipes**: Create, Read, Update, and Delete operations for managing recipes.
+- **MongoDB database integration**: Persistent storage of recipes and user data.
+- **Input validation**: Ensures that all required fields are provided and valid.
+- **Error handling**: Graceful handling of errors with appropriate HTTP status codes and messages.
+- **Pagination support**: Efficient retrieval of recipes with pagination.
+- **RESTful architecture**: Follows REST principles for API design.
 
-** Prerequisites
+## Prerequisites
 
 Before running this project, make sure you have installed:
 
-- Node.js (v14 or higher)
-- MongoDB
+- **Node.js** (v14 or higher): JavaScript runtime for building the API.
+- **MongoDB**: Database for storing recipes and user data.
 
-** Installation
+## Installation
 
-1. Clone the repository:
+1. **Clone the repository**:
 
-git clone https://github.com/J3ZZ3/MongoDB_Recipe_App
+   ```bash
+   git clone https://github.com/J3ZZ3/MongoDB_Recipe_App
+   ```
 
+2. **Install dependencies**:
 
-2. Install dependencies:
+   Navigate to the project directory and run:
 
+   ```bash
+   npm install
+   ```
 
-npm install
+3. **Create a `.env` file in the root directory**:
 
+   This file will store your environment variables. Create a file named `.env` and add the following:
 
-3. Create a `.env` file in the root directory:
+   ```plaintext
+   MONGO_URI=your_mongodb_connection_string
+   PORT=5000
+   JWT_SECRET=your_jwt_secret_key
+   JWT_EXPIRE=30d
+   ```
 
-.env
-MONGO_URI=your_mongodb_connection_string
-PORT=5000
-JWT_SECRET=your_jwt_secret_key
-JWT_EXPIRE=30d
+   Replace `your_mongodb_connection_string` with your actual MongoDB connection string.
 
+## RECIPE Endpoints
 
-** RECIPE Endpoints
- GET | `/api/recipes` | Get all recipes |
+| Method | Endpoint            | Description                     |
+|--------|---------------------|---------------------------------|
+| GET    | `/api/recipes`      | Get all recipes with pagination |
+| GET    | `/api/recipes/:id`  | Get a specific recipe          |
+| POST   | `/api/recipes`      | Create a new recipe            |
+| PUT    | `/api/recipes/:id`  | Update a recipe                |
+| DELETE | `/api/recipes/:id`  | Delete a recipe                |
 
- GET | `/api/recipes/:id` | Get a specific recipe |
+## AUTH Endpoints
 
- POST | `/api/recipes` | Create a new recipe |
+| Method | Endpoint                | Description               |
+|--------|-------------------------|---------------------------|
+| POST   | `/api/auth/register`    | Register a new user       |
+| POST   | `/api/auth/login`       | Login user                |
+| GET    | `/api/auth/me`          | Get current user details  |
 
- PUT | `/api/recipes/:id` | Update a recipe |
+## Usage Examples
 
- DELETE | `/api/recipes/:id` | Delete a recipe |
+1. **Register a User**
 
-** AUTH Endpoints
+   **Request:**
 
- POST | `/api/auth/register` | Register a new user |
+   ```http
+   POST /api/auth/register
+   ```
 
- POST | `/api/auth/login` | Login user |
+   **Body:**
 
- GET | `/api/auth/me` | Get current user |
+   ```json
+   {
+     "name": "John Doe",
+     "email": "john@example.com",
+     "password": "123456",
+     "role": "user"
+   }
+   ```
 
-** Usage Examples
+2. **Login**
 
- 1. Register a User
+   **Request:**
 
-POST /api/auth/register
+   ```http
+   POST /api/auth/login
+   ```
 
-{
-"name": "John Doe",
-"email": "john@example.com",
-"password": "123456",
-"role": "user"
-}
+   **Body:**
 
- 2. Login
+   ```json
+   {
+     "email": "john@example.com",
+     "password": "123456"
+   }
+   ```
 
-POST /api/auth/login
+3. **Create a Recipe**
 
-{
-"email": "john@example.com",
-"password": "123456"
-}
+   **Request:**
 
- 3. Create a Recipe
+   ```http
+   POST /api/recipes
+   ```
 
-POST /api/recipes
+   **Body:**
 
-{
-"title": "Delicious Recipe",
-"description": "A tasty recipe",
-"ingredients": ["ingredient1", "ingredient2"],
-"instructions": "Step 1: ... Step 2: ..."
-}
+   ```json
+   {
+     "title": "Delicious Recipe",
+     "description": "A tasty recipe",
+     "ingredients": ["ingredient1", "ingredient2"],
+     "instructions": "Step 1: ... Step 2: ...",
+     "cookingTime": 30,
+     "difficulty": "Easy"
+   }
+   ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
